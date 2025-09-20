@@ -1,4 +1,5 @@
-const API_BASE_URL = "https://travell-planner-backend-357287453183.us-central1.run.app"
+const API_BASE_URL = "https://travell-planner-backend-357287453183.us-central1.run.app";
+// "https://travell-planner-backend-357287453183.us-central1.run.app"
 // "http://127.0.0.1:8000";
 
 export const ENDPOINTS = {
@@ -7,4 +8,5 @@ export const ENDPOINTS = {
   TRIP_DATA: `${API_BASE_URL}/frontend/trip-data`,
   UNIFIED_TRIP_DATA: `${API_BASE_URL}/frontend/unified-trip-data`,
   TRIP_CARDS: `${API_BASE_URL}/frontend/trip-cards`,
+  PROCESS_PROMPT: `${API_BASE_URL}/frontend/process-prompt`,
 };

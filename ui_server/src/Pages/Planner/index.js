@@ -15,15 +15,13 @@ function Planner() {
       <div className="flex flex-col h-screen w-screen bg-gray-100">
         <div className='flex w-screen h-[10%] mb-1'>  
             <ThemedHeader>
-                <div className="flex items-center">
-                    <img src="/logo.svg" alt="EaseMyTrip" className="h-[2.5%] mr-4" />
-                    <span className="font-bold text-lg text-gray-800">Trip Planner</span>
+            <div className="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                    </svg>
+                    <span className="font-bold text-lg text-gray-800">DestiniAI</span>
                 </div>
-                <div className="flex items-center space-x-4">
-                    <button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
-                        Login or Signup
-                    </button>
-                </div>
+         
             </ThemedHeader>
         </div>
         <div className="bg-white shadow-md w-full h-[5%] flex items-center justify-center">

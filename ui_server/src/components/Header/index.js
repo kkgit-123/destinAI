@@ -54,9 +54,6 @@ function Header () {
           <div className="text-gray-700">
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 3v1m0 16v1m9-9h1M3 12H2m15.325-4.243l.707-.707M3.929 19.071l.707-.707m0-10.607l-.707-.707M19.071 3.929l-.707.707M18.364 18.364l.707.707M4.929 4.929l-.707-.707"></path></svg>
           </div>
-          <button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
-            Login or Signup
-          </button>
         </div>
       </div>
     </header>
