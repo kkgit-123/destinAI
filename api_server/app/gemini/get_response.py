@@ -1,6 +1,6 @@
 from app.config import initialize_llm
 from langchain_core.prompts import ChatPromptTemplate
-from prompt import PLANNER_SYSTEM_PROMPT, PLANNER_USER_PROMPT, plan_data
+from app.gemini.prompt import PLANNER_SYSTEM_PROMPT, PLANNER_USER_PROMPT, plan_data
 from typing import Dict
 
 def create_prompt_template(system_prompt: str, user_prompt: str, user_message: str) -> ChatPromptTemplate:

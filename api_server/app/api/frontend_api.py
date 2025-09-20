@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from typing import List, Dict, Any
 from app.utils.frontend_data_service import get_plan_data, get_prompt_cards_data, get_trip_data, get_unified_trip_data, get_trip_cards_data
-from service.llm_service import generate_travel_plan
+from app.gemini.get_response import generate_travel_plan
 
 router = APIRouter()
 
