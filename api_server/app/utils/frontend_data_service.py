@@ -26,7 +26,8 @@ prompt_cards_data = [
     "promptText": 'Create a solo backpacking itinerary through Southeast Asia for one month, covering budget-friendly options and must-see destinations.',
   },
 ]
-
+def generate_travel_plan(id):
+    return get_plan_data(id)
 
 def get_plan_data(id: str) -> Dict[str, Any]:
     return unified_trip_data[int(id)-1]
