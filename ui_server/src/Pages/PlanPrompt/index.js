@@ -91,14 +91,18 @@ function PlanPrompt() {
       <div className="bg-white shadow-md w-full h-[5%] flex items-center justify-center">
         <Breadcrumbs currentStep={1} /> {/* Assuming "Plan Prompt" is the first step */}
       </div>
-
+      
       {/* Main Content Area */}
       <div className="flex flex-col flex-grow p-4 md:p-8 overflow-auto items-center">
+        <div className="w-[90%] md:w-[70%] lg:w-[50%] mx-auto">
+          <span className='flex text-2xl font-semibold text-gray-800 mb-4'>Ignite Your Imagination: Describe Your Dream Escape!</span>
+        </div>
         {/* Text area and Send button */}
         <div className="flex items-center justify-center w-full mb-8">
+     
           <div className="relative w-[90%] md:w-[70%] lg:w-[50%] flex items-center">
             <textarea
-              placeholder="Text area to add text"
+              placeholder="Share your travel dreams here..."
               className="flex-grow border border-gray-300 rounded-full py-2 px-6 text-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
               value={promptText}
               onChange={(e) => {
@@ -141,9 +145,10 @@ function PlanPrompt() {
               className="bg-white rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow overflow-hidden"
               onClick={() => setPromptText(card.title)} // Assuming clicking a trip card sets its title as prompt
             >
-              <div className="relative h-[120px] bg-cover bg-center" style={{ backgroundImage: `url('${card.imageUrl}')` }}>
-                <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-                  <p className="text-white font-bold text-xl ">{card.title}</p>
+              <div className="relative h-[120px]">
+                <img src={card.imageUrl} alt={card.title} className="absolute inset-0 w-full h-full object-cover rounded-t-lg" />
+                <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col items-center justify-center text-center">
+                  <p className="text-white font-bold text-xl">{card.title}</p>
                 </div>
               </div>
               <div className="p-4 h-[80px] flex flex-col justify-center">
