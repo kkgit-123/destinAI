@@ -44,11 +44,7 @@ function PlanForm() {
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                     </svg>
-                    <span className="font-bold text-lg text-gray-800">Trip Journey Trip</span>
-                </div>
-                <div className="font-bold text-lg text-gray-800">Trip Details</div>
-                <div className="flex items-center">
-                    <img src="https://via.placeholder.com/30" alt="User" className="rounded-full" />
+                    <span className="font-bold text-lg text-gray-800">DestiniAI</span>
                 </div>
             </ThemedHeader>
       </div>
