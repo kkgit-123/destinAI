@@ -1,0 +1,7 @@
+# Logs
+logs
+
+# node.js "npm install" products
+node_modules
+.npm
+.yarn-integrity

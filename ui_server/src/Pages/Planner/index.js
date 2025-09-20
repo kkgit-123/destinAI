@@ -1,0 +1,90 @@
+import mapBackground from "../../Images/map_bg.png";
+import { FaPencilAlt } from "react-icons/fa";
+import { FaRobot } from "react-icons/fa";
+import { MdOutlineSave } from "react-icons/md";
+import { FaHistory } from "react-icons/fa";
+import { useNavigate } from 'react-router-dom';
+import ThemedHeader from '../../components/ThemedHeader'; // Import ThemedHeader
+import Breadcrumbs from '../../components/Breadcrumbs'; // Import Breadcrumbs
+
+function Planner() {
+  const navigate = useNavigate();
+
+  return (
+    <>
+      <div className="flex flex-col h-screen w-screen bg-gray-100">
+        <div className='flex w-screen h-[10%] mb-1'>  
+            <ThemedHeader>
+                <div className="flex items-center">
+                    <img src="/logo.svg" alt="EaseMyTrip" className="h-[2.5%] mr-4" />
+                    <span className="font-bold text-lg text-gray-800">Trip Planner</span>
+                </div>
+                <div className="flex items-center space-x-4">
+                    <button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
+                        Login or Signup
+                    </button>
+                </div>
+            </ThemedHeader>
+        </div>
+        <div className="bg-white shadow-md w-full h-[5%] flex items-center justify-center">
+           <Breadcrumbs currentStep={0} />
+        </div>
+       
+        <div className="flex flex-col w-screen h-[81%] bg-cover bg-center bg-fit rounded-lg bg-white relative" style={{ backgroundImage: `url(${mapBackground})` }}>
+          <div className="absolute inset-0 bg-white bg-opacity-80"></div> {/* Overlay for text readability */}
+          <div className="relative z-10 flex flex-col items-center justify-center h-full p-4">
+            <h1 className="text-4xl font-bold text-gray-800 mb-2">How would you like to begin?</h1>
+            <p className="text-gray-600 text-lg mb-8">Start with full details or let us guide you with questions.</p>
+
+            <div className="flex justify-center  space-x-8 mb-12">
+              {/* I Know My Details Card */}
+              <div className="flex flex-col w-[35%] cursor-pointer rounded-xl shadow-lg bg-white border border-gray-200 max-w-sm text-center transform transition-transform duration-300 hover:scale-105 hover:shadow-xl p-6 items-center justify-center"
+                onClick={() => { navigate(`/plan/prompt`); }}
+              >
+                <div className="bg-blue-500 rounded-full p-4 text-white mb-4">
+                  <FaPencilAlt size={30} />
+                </div>
+                <h3 className="text-xl font-bold text-gray-800 mb-2">I Know My Details</h3>
+                <p className="text-gray-700 text-sm">Enter destination, dates, budget and more</p>
+              </div>
+
+              {/* Help Me Plan Card */}
+              <div className="flex flex-col w-[35%] cursor-pointer rounded-xl shadow-lg bg-white border border-gray-200 max-w-sm text-center transform transition-transform duration-300 hover:scale-105 hover:shadow-xl p-6 relative items-center justify-center"
+                onClick={() => { navigate(`/plan/form`); }}
+              >
+                <div className="bg-blue-500 rounded-full p-4 text-white mb-4">
+                  <FaRobot size={30} />
+                </div>
+                <h3 className="text-xl font-bold text-gray-800 mb-2">Help Me Plan</h3>
+                <p className="text-gray-700 text-sm">Answer a few questions and we'll craft your itinerary.</p>
+              </div>
+            </div>
+
+            <div className="flex flex-col items-center mb-8">
+              <span className="text-gray-600 text-lg mb-4">Extra quick links</span>
+              <div className="flex space-x-8">
+                <span className="flex text-blue-600 items-center cursor-pointer hover:underline">
+                  <MdOutlineSave size={20} className="mr-2" />
+                  View Saved Trips
+                </span>
+                <span className="flex text-blue-600 items-center cursor-pointer hover:underline">
+                  <FaHistory size={20} className="mr-2" />
+                  Recently Viewed Plans
+                </span>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between w-full max-w-2xl mt-auto">
+              <span className="text-gray-600">Need Inspiration? Explore Sample <a href="#" className="text-blue-600 hover:underline">Trips</a>.</span>
+              <button className="bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700">
+                Continue
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+export default Planner;
