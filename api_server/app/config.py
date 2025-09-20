@@ -1,5 +1,5 @@
 from app.utils.config_reader import ConfigReader
-from langchain.chat_models import init_chat_model
+from langchain_google_genai import ChatGoogleGenerativeAI
 
 # Initialize the ConfigReader
 config = ConfigReader()
@@ -22,11 +22,13 @@ def initialize_llm():
         if not model_name or not api_key:
             raise ValueError("MODEL_NAME and/or API_KEY is missing in the LLM config section.")
 
-        llm = init_chat_model(
-            model_name,
-            model_provider=provider,
-            api_key=api_key,
-            temperature=0
+        llm = ChatGoogleGenerativeAI(
+            google_api_key=api_key,
+            model=model_name,
+            temperature=0,
+            max_tokens=None,
+            timeout=None,
+            max_retries=2,
         )
 
         return llm

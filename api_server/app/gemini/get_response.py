@@ -18,7 +18,7 @@ def generate_travel_plan(user_message: str) -> Dict:
     prompt = create_prompt_template(PLANNER_SYSTEM_PROMPT, PLANNER_USER_PROMPT, user_message)
     try:
         llm_response = llm.invoke(prompt).content
-        llm_response = plan_data
+        # llm_response = plan_data
         return llm_response
     except Exception as e:
         raise ValueError(f"Error generating travel plan: {e}")
