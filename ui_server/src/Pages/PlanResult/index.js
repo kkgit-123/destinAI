@@ -1,8 +1,6 @@
-
-
 import React, { useState } from "react";
-import { InfinitySpin } from "react-loader-spinner";
 import { useParams, useNavigate } from 'react-router-dom';
+import BlueLoaderOverlay from './BlueLoaderOverlay';
 import Chat from "../../components/Chat";
 import DisplayPlan from "../../components/DisplayPlan";
 import ThemedHeader from '../../components/ThemedHeader'; // Import ThemedHeader
@@ -84,12 +82,7 @@ function PlanResult() {
                         <div className={`${isChatCollapsed ? 'hidden' : 'block'} w-full h-full`}>
                             <div className="flex justify-end ">
                                 {isLoading ? (
-                                    <div className="flex flex-col justify-center items-center h-full">
-                                        <InfinitySpin
-                                            width="100"
-                                            color="#4CAF50"
-                                        />
-                                    </div>
+                                    <BlueLoaderOverlay />
                                 ) : (
                                     <button
                                         onClick={handleConfirmPlan}

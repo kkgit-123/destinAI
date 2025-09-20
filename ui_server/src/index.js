@@ -5,10 +5,11 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { StrictMode,Suspense } from "react";
 import { InfinitySpin } from "react-loader-spinner";
+import Loading from './Pages/Loading';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <StrictMode>
-  <Suspense fallback={<div className="w-[100vw] h-[100vh] flex"> <div className="m-auto transform -rotate-45 -rotate-y-45%"><InfinitySpin  width="100%" height="100%"  color="#FF6005" /></div> </div>}>
+  <Suspense fallback={<Loading/>}>
   <App/>
 </Suspense>
 </StrictMode>

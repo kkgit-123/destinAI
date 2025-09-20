@@ -56,10 +56,9 @@ function PlanForm() {
 
       {/* Main Content */}
       <div className="flex flex-col flex-grow p-8 overflow-auto mb-3">
-        <h1 className="text-lg font-bold mb-2">Let's define your journey</h1>
+        <h1 className="text-lg font-bold mb-2">Chart Your Course: Define Your Adventure</h1>
         <p className="text-gray-600 text-sm mb-4 w-[60%]">
-          Provide key full details so let us can few guide gustim plan—or answer guidens if
-          questions if ano chose Help Me Plan.
+          Provide essential details to shape your plan.
         </p>
 
         {/* Form Layout */}
@@ -146,10 +145,10 @@ function PlanForm() {
                 </button>
               </div>
 
-              <label className="block text-gray-700 text-sm font-bold mb-2">Anything special? Dietary needs, events, or preferences....</label>
+              <label className="block text-gray-700 text-sm font-bold mb-2">Any special requests? Dietary needs, events, or unique preferences?</label>
               <div className="flex items-center border border-gray-300 rounded-md p-2">
                 <textarea
-                  placeholder="Anything special? Dietary needs, events, or preferences...."
+                  placeholder="Any special requests? Dietary needs, events, or unique preferences?"
                   className="flex-grow outline-none resize-none h-24"
                 ></textarea>
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">

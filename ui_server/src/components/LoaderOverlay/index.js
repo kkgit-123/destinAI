@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import Lottie from 'lottie-react';
+import animationData from '../../animations/loading.json';
 
 const testMessages = [
   "Analyzing your preferences...",
@@ -27,15 +29,18 @@ const LoaderOverlay = () => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-white bg-opacity-80 backdrop-blur-md">
-      <div className="text-center text-gray-800 text-2xl font-bold overflow-hidden h-12 flex items-center justify-center">
-        <p
-          key={currentMessageIndex} // Key change forces re-render and re-triggers animation
-          className={`transition-all duration-700 ease-out ${
-            messageVisible ? 'transform translate-y-0 opacity-100' : 'transform translate-y-full opacity-0'
-          }`}
-        >
-          {testMessages[currentMessageIndex]}
-        </p>
+      <div className="flex flex-col items-center justify-center text-center text-gray-800 text-2xl font-bold">
+        <Lottie animationData={animationData} loop={true} style={{ width: 150, height: 150 }} />
+        <div className="overflow-hidden h-12 flex items-center justify-center mt-4">
+          <p
+            key={currentMessageIndex} // Key change forces re-render and re-triggers animation
+            className={`transition-all duration-700 ease-out ${
+              messageVisible ? 'transform translate-y-0 opacity-100' : 'transform translate-y-full opacity-0'
+            }`}
+          >
+            {testMessages[currentMessageIndex]}
+          </p>
+        </div>
       </div>
     </div>
   );

@@ -12,8 +12,8 @@ prompt_cards_data = [
   },
   {
     "id": 2,
-    "displayText": 'Rajasthan Road trip',
-    "promptText": 'Organize an adventure trip to the Amazon rainforest, focusing on eco-tourism, wildlife viewing, and local cultural experiences.',
+    "displayText": 'Kerla cousin trip',
+    "promptText": 'create me a itenary plan for my trip to kerla from Pune , I am travelling with my cousins . can you plan me a trip using all public transport options available . I am lanning to visit kerla from 2 october to 10 October , I want to have a bit of religious and party theme , also want to enjoy sunrises and elephants ',
   },
   {
     "id": 3,
@@ -22,8 +22,8 @@ prompt_cards_data = [
   },
   {
     "id": 4,
-    "displayText": 'Hindi',
-    "promptText": 'Create a solo backpacking itinerary through Southeast Asia for one month, covering budget-friendly options and must-see destinations.',
+    "displayText": 'Road Trip to Rajasthan in Hindi',
+    "promptText": 'provide me a itenary in hindi for a car road trip to rajasthan for 5 days from Surat , I am planning to go from 22 October to 30 october 2025 , I have a budget of 15000 per head and am travelling with my 4 friends in my hilux',
   },
 ]
 def generate_travel_plan(id):
@@ -50,12 +50,12 @@ def get_trip_cards_data() -> List[Dict[str, Any]]:
 def process_prompt(prompt):
     time.sleep(20) # Add a 5-second delay
     if "kokan" in prompt:
-      return "1"
-    elif "shimla" in prompt:
       return "3"
+    elif "shimla" in prompt:
+      return "4"
     elif "rajasthan" in prompt:
+      return "1"
+    elif "kerla" in prompt:
       return "2"
-    elif "hindi" in prompt:
-      return 4
     else :
-       return 5
+       return "5"
