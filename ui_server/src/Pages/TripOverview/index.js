@@ -1,6 +1,4 @@
-import React from 'react';
-
-import { useEffect,useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useParams } from 'react-router-dom'; // Import useParams
 import planData from '../../constants/planData'; // Import planData as fallback
 import { ENDPOINTS } from '../../constants/endpoints';
@@ -10,33 +8,66 @@ import BookingConfirmationBanner from '../../components/BookingConfirmationBanne
 import ItineraryCard from '../../components/ItineraryCard';
 import NotificationCard from '../../components/NotificationCard';
 import BookingStatusCard from '../../components/BookingStatusCard';
-
+import MapView from "../../components/MapView"; // Import MapView
+import { useLoadScript } from '@react-google-maps/api'; // Import useLoadScript
+import logo from "../../Images/favicon.ico"
 function TripOverview() {
     const { tripId } = useParams(); // Get tripId from URL parameters
-    const [currentPlanData, setCurrentPlanData] = useState(planData); // Initialize with fallback data
+    const [currentPlanData, setCurrentPlanData] = useState(null); // Initialize with null, will be set by fetch
+    const [selectedLocations, setSelectedLocations] = useState([]); // State to hold locations for the selected day
+
+    const { isLoaded, loadError } = useLoadScript({
+        googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+        libraries: ["places"], // Add any necessary libraries
+    });
 
     useEffect(() => {
         const fetchPlanData = async () => {
-            if (!tripId) {
-                console.warn("No tripId found, using local data.");
-                setCurrentPlanData(planData);
-                return;
-            }
-            try {
-                const response = await fetch(`${ENDPOINTS.PLAN_DATA}/${tripId}`);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
+            let dataToUse = planData; // Default to local fallback
+
+            if (tripId) {
+                try {
+                    const response = await fetch(`${ENDPOINTS.PLAN_DATA}/${tripId}`);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    dataToUse = await response.json();
+                } catch (error) {
+                    console.error("Failed to fetch plan data:", error);
+                    alert("Failed to load plan data from server. Using local data.");
                 }
-                const data = await response.json();
-                setCurrentPlanData(data);
-            } catch (error) {
-                console.error("Failed to fetch plan data:", error);
-                alert("Failed to load plan data from server. Using local data.");
-                setCurrentPlanData(planData); // Fallback to local data
+            } else {
+                console.warn("No tripId found, using local data.");
+            }
+            
+            setCurrentPlanData(dataToUse);
+            console.log("Current Plan Data after fetch/fallback:", dataToUse); // Debugging line
+
+            // Set initial locations from the first day if available in the dataToUse
+            if (dataToUse && dataToUse.tabContent && dataToUse.tabContent.Itinerary && dataToUse.tabContent.Itinerary.length > 0 && dataToUse.tabContent.Itinerary[0].days && dataToUse.tabContent.Itinerary[0].days.length > 0) {
+                setSelectedLocations(dataToUse.tabContent.Itinerary[0].days[0].locations || []);
+            } else {
+                setSelectedLocations([]); // Ensure it's an empty array if no locations are found
             }
         };
         fetchPlanData();
     }, [tripId]); // Add tripId to dependency array
+
+    const MapComponent = useMemo(() => {
+        if (loadError) return <div>Error loading maps</div>;
+        if (!isLoaded) return <div>Loading Maps...</div>;
+        console.log(selectedLocations)
+        return <MapView spots={selectedLocations} />;
+    }, [isLoaded, loadError, selectedLocations]);
+
+    if (!currentPlanData) {
+        return (
+            <div className="flex items-center justify-center w-screen h-screen text-gray-500">
+                Loading trip data...
+            </div>
+        );
+    }
+
     const departure = currentPlanData.tabContent.Overview.find(item => item.type === 'departure');
     const weatherForecast = currentPlanData.tabContent.Weather.filter(item => item.type === 'weather');
     const packingChecklist = currentPlanData.tabContent.Packing.filter(item => item.type === 'item');
@@ -44,9 +75,12 @@ function TripOverview() {
     const budgetTracker = currentPlanData.tabContent.Budget.find(item => item.type === 'budget');
     const bookingConfirmation = currentPlanData.tabContent.Bookings.find(item => item.type === 'bookingConfirmation');
     const allBookings = currentPlanData.tabContent.Bookings.filter(item => item.type === 'booking' || item.type === 'packageBooking');
-
     const itineraryDays = currentPlanData.tabContent.Itinerary.find(item => item.type === 'dailyItinerary')?.days || [];
 
+    const handleDayClick = (locations) => {
+        console.log("handleDayClick called with locations:", locations); // Debugging line
+        setSelectedLocations(locations);
+    };
 
     const notificationData = {
         icon: "✈️",
@@ -59,9 +93,16 @@ function TripOverview() {
             <div className='flex w-screen h-[10%] mb-1'>
                 <ThemedHeader>
                 <div className="flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    {/* <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                    </svg>
+                    </svg> */}
+
+
+<img src={logo} className="flex h-full w-auto object-contain">
+                    </img>
+
+
+
                     <span className="font-bold text-lg text-gray-800">DestiniAI</span>
                 </div>
                     
@@ -87,7 +128,9 @@ function TripOverview() {
                         {/* Top Row: Map and Days to Departure */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                             <div className="bg-white p-5 rounded-xl shadow-md border border-gray-200 flex flex-col transform transition-transform duration-300 hover:scale-105 hover:shadow-xl">
-                                <img src="/src/Images/map_bg.png" alt="Map" className="w-full h-[70%] object-cover rounded-lg mb-3 shadow-sm" />
+                                <div className="w-full h-[70%] rounded-lg mb-3 shadow-sm">
+                                    {MapComponent}
+                                </div>
                                 <p className="text-sm text-gray-500 text-center">Your personalized trip route</p>
                             </div>
                             <div className="bg-white p-5 rounded-xl shadow-md border border-gray-200 flex flex-col justify-center items-center text-center transform transition-transform duration-300 hover:scale-105 hover:shadow-xl">
@@ -103,7 +146,7 @@ function TripOverview() {
 
                         {/* Itinerary Card */}
                         {itineraryDays.length > 0 && (
-                            <ItineraryCard allDays={itineraryDays} />
+                            <ItineraryCard allDays={itineraryDays} onDayClick={handleDayClick} />
                         )}
 
                         {/* Documents */}
@@ -141,7 +184,7 @@ function TripOverview() {
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-2">
                                 {packingChecklist.map((item, index) => (
                                     <label key={index} className="flex items-center text-gray-700 cursor-pointer">
-                                        <input type="checkbox" className="mr-2 h-4 w-4 text-blue-600 rounded focus:ring-blue-500" defaultChecked={item.checked} />
+                                        <input type="checkbox" className="mr-2 h-4 w-4 text-blue-600 rounded focus:ring-blue-500" defaultChecked={item.checked==="true"} />
                                         <span>{item.name}</span>
                                     </label>
                                 ))}

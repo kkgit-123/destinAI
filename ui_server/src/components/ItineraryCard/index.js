@@ -1,9 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 
-function ItineraryCard({ allDays }) {
+function ItineraryCard({ allDays, onDayClick }) {
   const [selectedDayIndex, setSelectedDayIndex] = useState(0); // Default to the first day
 
   const currentDay = allDays[selectedDayIndex];
+
+  // Call onDayClick initially with the first day's locations, only on mount
+  useEffect(() => {
+    if (allDays.length > 0 && allDays[0].locations) {
+      onDayClick(allDays[0].locations);
+      console.log("ItineraryCard: Initial locations set:", allDays[0].locations); // Debugging line
+    }
+  }, []); // Empty dependency array means this runs once on mount
 
   if (!currentDay) {
     return null; // Or a placeholder if no days are available
@@ -15,7 +23,13 @@ function ItineraryCard({ allDays }) {
         {allDays.map((day, index) => (
           <button
             key={index}
-            onClick={() => setSelectedDayIndex(index)}
+            onClick={() => {
+              setSelectedDayIndex(index);
+              if (day.locations) {
+                onDayClick(day.locations);
+                console.log("ItineraryCard: Day button clicked, passing locations:", day.locations); // Debugging line
+              }
+            }}
             className={`px-4 py-2 rounded-lg text-sm font-semibold transition-colors duration-200
               ${selectedDayIndex === index
                 ? 'bg-blue-600 text-white shadow-md'

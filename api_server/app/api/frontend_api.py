@@ -27,8 +27,12 @@ async def get_prompt_cards_api():
 
 @router.get("/trip-data/{id}", response_model=Dict[str, Any])
 async def get_trip_data_api(id: str):
-
-    return get_trip_data(id)
+    try:
+        return generate_travel_plan(id)
+    except ValueError as ve:  # Catch specific ValueError from llm_service
+        raise HTTPException(status_code=400, detail=str(ve))  # Client error
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"An unexpected error occurred: {str(e)}")  # Server error
 
 @router.get("/unified-trip-data", response_model=Dict[str, Any])
 async def get_unified_trip_data_api():

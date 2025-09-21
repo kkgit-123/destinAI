@@ -7,6 +7,7 @@ import promptCards from '../../constants/promptCards'; // Import promptCards as 
 import { ENDPOINTS } from '../../constants/endpoints';
 import LoaderOverlay from '../../components/LoaderOverlay'; // Import LoaderOverlay
 
+import logo from "../../Images/favicon.ico"
 function PlanPrompt() {
   const [currentPromptCards, setCurrentPromptCards] = useState(promptCards);
   const [currentTripCards, setCurrentTripCards] = useState([]); // New state for trip cards
@@ -79,9 +80,14 @@ function PlanPrompt() {
       <div className='flex w-screen h-[10%] mb-1'>  
             <ThemedHeader>
             <div className="flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    {/* <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                    </svg>
+                    </svg> */}
+
+<img src={logo} className="flex h-full w-auto object-contain">
+                    </img>
+
+
                     <span className="font-bold text-lg text-gray-800">DestiniAI</span>
                 </div>
             </ThemedHeader>
