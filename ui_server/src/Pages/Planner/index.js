@@ -6,6 +6,7 @@ import { FaHistory } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
 import ThemedHeader from '../../components/ThemedHeader'; // Import ThemedHeader
 import Breadcrumbs from '../../components/Breadcrumbs'; // Import Breadcrumbs
+import logo from "../../Images/favicon.ico"
 
 function Planner() {
   const navigate = useNavigate();
@@ -16,9 +17,13 @@ function Planner() {
         <div className='flex w-screen h-[10%] mb-1'>  
             <ThemedHeader>
             <div className="flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    {/* <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                    </svg>
+                    </svg> */}
+                    <img src={logo} className="flex h-full w-auto object-contain">
+                    </img>
+
+
                     <span className="font-bold text-lg text-gray-800">DestiniAI</span>
                 </div>
          
@@ -29,12 +34,12 @@ function Planner() {
         </div>
        
         <div className="flex flex-col w-screen h-[81%] bg-cover bg-center bg-fit rounded-lg bg-white relative" style={{ backgroundImage: `url(${mapBackground})` }}>
-          <div className="absolute inset-0 bg-white bg-opacity-80"></div> {/* Overlay for text readability */}
+          <div className="absolute inset-0 bg-white bg-opacity-[20%]"></div> {/* Overlay for text readability */}
           <div className="relative z-10 flex flex-col items-center justify-center h-full p-4">
             <h1 className="text-4xl font-bold text-gray-800 mb-2">Embark on Your Adventure: How Will You Begin?</h1>
             <p className="text-gray-600 text-lg mb-8">Provide your vision or let our AI craft a personalized journey.</p>
 
-            <div className="flex justify-center  space-x-8 mb-12">
+            <div className="flex justify-center  space-x-24 mb-12">
               {/* I Know My Details Card */}
               <div className="flex flex-col w-[35%] cursor-pointer rounded-xl shadow-lg bg-white border border-gray-200 max-w-sm text-center transform transition-transform duration-300 hover:scale-105 hover:shadow-xl p-6 items-center justify-center"
                 onClick={() => { navigate(`/plan/prompt`); }}
