@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 
 const Chat = () => {
   const [message, setMessage] = useState('');
-  const [conversation, setConversation] = useState([
-    { text: "Hello! How can I help you with your CAD evaluation today?", sender: 'bot' },
-    { text: "I need to evaluate a new bracket design. Can you guide me through the process?", sender: 'user' },
-    { text: "Certainly! First, please upload your CAD files and any relevant engineering drawings.", sender: 'bot' },
-    { text: "Okay, I've uploaded the files. What's next?", sender: 'user' },
-    { text: "Great! I'm now analyzing the design for potential stress points and material compatibility.", sender: 'bot' }
-  ]);
+  const [conversation, setConversation] = useState([]);
+  //   [
+  //   { text: "Hello! How can I help you with your CAD evaluation today?", sender: 'bot' },
+  //   { text: "I need to evaluate a new bracket design. Can you guide me through the process?", sender: 'user' },
+  //   { text: "Certainly! First, please upload your CAD files and any relevant engineering drawings.", sender: 'bot' },
+  //   { text: "Okay, I've uploaded the files. What's next?", sender: 'user' },
+  //   { text: "Great! I'm now analyzing the design for potential stress points and material compatibility.", sender: 'bot' }
+  // ]);
 
   const handleSendMessage = () => {
     if (message.trim()) {

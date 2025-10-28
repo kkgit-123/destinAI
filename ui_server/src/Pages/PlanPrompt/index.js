@@ -1,15 +1,17 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ThemedHeader from '../../components/ThemedHeader'; // Import ThemedHeader
 import Breadcrumbs from '../../components/Breadcrumbs';
-import  { useEffect } from 'react';
 import promptCards from '../../constants/promptCards'; // Import promptCards as fallback
 import { ENDPOINTS } from '../../constants/endpoints';
+import LoaderOverlay from '../../components/LoaderOverlay'; // Import LoaderOverlay
 
+import logo from "../../Images/favicon.ico"
 function PlanPrompt() {
   const [currentPromptCards, setCurrentPromptCards] = useState(promptCards);
   const [currentTripCards, setCurrentTripCards] = useState([]); // New state for trip cards
+  const [isLoading, setIsLoading] = useState(false); // State to control loader visibility
 
   useEffect(() => {
     const fetchPromptCards = async () => {
@@ -47,19 +49,46 @@ function PlanPrompt() {
   }, []);
   const navigate = useNavigate();
   const [promptText, setPromptText] = useState('');
+
+  const handleProcessPrompt = async () => {
+    setIsLoading(true); // Show loader
+    try {
+      const response = await fetch(ENDPOINTS.PROCESS_PROMPT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ prompt: promptText }),
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      const planId = data.data.id;
+      navigate(`/plan/result/${planId}`);
+    } catch (error) {
+      console.error("Failed to process prompt:", error);
+      alert("Failed to process prompt. Please try again.");
+    } finally {
+      setIsLoading(false); // Hide loader
+    }
+  };
+
   return (
     <div className="flex flex-col h-screen w-screen bg-gray-100">
       {/* Header */}
       <div className='flex w-screen h-[10%] mb-1'>  
             <ThemedHeader>
-                <div className="flex items-center">
-                    <img src="/logo.svg" alt="EaseMyTrip" className="h-[2.5%] mr-4" />
-                    <span className="font-bold text-lg text-gray-800">Plan Prompt</span>
-                </div>
-                <div className="flex items-center space-x-4">
-                    <button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
-                        Login or Signup
-                    </button>
+            <div className="flex items-center">
+                    {/* <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                    </svg> */}
+
+<img src={logo} className="flex h-full w-auto object-contain">
+                    </img>
+
+
+                    <span className="font-bold text-lg text-gray-800">DestiniAI</span>
                 </div>
             </ThemedHeader>
       </div>
@@ -68,14 +97,18 @@ function PlanPrompt() {
       <div className="bg-white shadow-md w-full h-[5%] flex items-center justify-center">
         <Breadcrumbs currentStep={1} /> {/* Assuming "Plan Prompt" is the first step */}
       </div>
-
+      
       {/* Main Content Area */}
       <div className="flex flex-col flex-grow p-4 md:p-8 overflow-auto items-center">
+        <div className="w-[90%] md:w-[70%] lg:w-[50%] mx-auto">
+          <span className='flex text-2xl font-semibold text-gray-800 mb-4'>Ignite Your Imagination: Describe Your Dream Escape!</span>
+        </div>
         {/* Text area and Send button */}
         <div className="flex items-center justify-center w-full mb-8">
+     
           <div className="relative w-[90%] md:w-[70%] lg:w-[50%] flex items-center">
             <textarea
-              placeholder="Text area to add text"
+              placeholder="Share your travel dreams here..."
               className="flex-grow border border-gray-300 rounded-full py-2 px-6 text-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
               value={promptText}
               onChange={(e) => {
@@ -88,7 +121,7 @@ function PlanPrompt() {
             ></textarea>
             <button 
               className="absolute right-1 bg-blue-500 text-white rounded-full p-2 shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              onClick={() => navigate('/plan/result/1')}
+              onClick={handleProcessPrompt}
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -118,9 +151,10 @@ function PlanPrompt() {
               className="bg-white rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow overflow-hidden"
               onClick={() => setPromptText(card.title)} // Assuming clicking a trip card sets its title as prompt
             >
-              <div className="relative h-[120px] bg-cover bg-center" style={{ backgroundImage: `url('${card.imageUrl}')` }}>
-                <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-                  <p className="text-white font-bold text-xl ">{card.title}</p>
+              <div className="relative h-[120px]">
+                <img src={card.imageUrl} alt={card.title} className="absolute inset-0 w-full h-full object-cover rounded-t-lg" />
+                <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col items-center justify-center text-center">
+                  <p className="text-white font-bold text-xl">{card.title}</p>
                 </div>
               </div>
               <div className="p-4 h-[80px] flex flex-col justify-center">
@@ -130,6 +164,7 @@ function PlanPrompt() {
           ))}
         </div>
       </div>
+      {isLoading && <LoaderOverlay />}
     </div>
   );
 }

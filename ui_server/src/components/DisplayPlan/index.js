@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { InfinitySpin } from "react-loader-spinner";
-import mapImage from "../../Images/map_bg.png"; // Import the map image
 
-function DisplayPlan({ planData, filteredTabs }) {
+function DisplayPlan({ planData, filteredTabs, onDayClick, MapComponent }) {
   const [activeTab, setActiveTab] = useState(filteredTabs ? filteredTabs[0] : "Overview");
   const [selectedDayIndex, setSelectedDayIndex] = useState(0); // State to manage selected day
 
@@ -45,7 +44,7 @@ function DisplayPlan({ planData, filteredTabs }) {
           return (
             <div key={index} className="mb-3 p-2 border border-gray-200 rounded-md bg-white shadow-sm">
               <h4 className="font-bold text-sm">{block.service} Booking</h4>
-              <p className="text-xs text-gray-600">{block.details}</p>
+              <p className="text-xs text-gray-600">{block.description}</p>
               <p className={`text-xs mt-1 ${block.status === "Confirmed" ? "text-green-600" : "text-yellow-600"}`}>
                 Status: {block.status}
               </p>
@@ -91,7 +90,12 @@ function DisplayPlan({ planData, filteredTabs }) {
                         ? "bg-blue-600 text-white shadow-md"
                         : "bg-gray-200 text-gray-700 hover:bg-blue-100 hover:text-blue-700"
                       }`}
-                    onClick={() => setSelectedDayIndex(dayIndex)}
+                    onClick={() => {
+                      setSelectedDayIndex(dayIndex);
+                      if (onDayClick) {
+                        onDayClick(day.locations || []);
+                      }
+                    }}
                   >
                     {day.date}
                   </button>
@@ -148,7 +152,7 @@ function DisplayPlan({ planData, filteredTabs }) {
           return (
             <div key={index} className="mb-3 p-3 border border-green-300 rounded-md bg-green-50 shadow-sm">
               <h4 className="font-bold text-sm text-green-700">{block.service} Booking</h4>
-              <p className="text-xs text-gray-600">{block.details}</p>
+              <p className="text-xs text-gray-600">{block.description}</p>
               <p className={`text-xs mt-1 ${block.status === "Confirmed" ? "text-green-600" : "text-yellow-600"}`}>
                 Status: {block.status}
               </p>
@@ -168,9 +172,9 @@ function DisplayPlan({ planData, filteredTabs }) {
   return (
     <>
       <div className="flex h-full w-full bg-gray-100 p-4 rounded-lg shadow-inner">
-        {/* Left Section - Map/Image */}
+        {/* Left Section - Map */}
         <div className="w-[35%] p-3 mr-4 bg-white rounded-lg shadow-md flex items-center justify-center overflow-hidden">
-          <img src={mapImage} alt="Map Placeholder" className="max-w-full h-auto object-cover rounded-lg" />
+          {MapComponent}
         </div>
 
         <div className="flex flex-col w-[65%] bg-gray-50 px-5 pt-2 rounded-lg shadow-lg">

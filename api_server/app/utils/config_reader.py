@@ -42,6 +42,12 @@ class ConfigReader:
         except (configparser.NoSectionError, configparser.NoOptionError):
             return default
 
+    def get_image_base_path(self):
+        """
+        Retrieves the image base path.
+        """
+        return self.get('paths', 'image_base_path', 'destinAI/api_server/files/images')
+
     def getboolean(self, section, option, default=None):
         """
         Retrieves a boolean configuration value.

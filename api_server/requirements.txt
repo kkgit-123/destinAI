@@ -4,3 +4,5 @@ pydantic
 python-dotenv==1.0.1
 PyJWT
 python-multipart
+langchain
+langchain-google-genai

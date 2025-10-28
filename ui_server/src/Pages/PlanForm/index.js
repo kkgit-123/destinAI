@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import ThemedHeader from '../../components/ThemedHeader'; // Import ThemedHeader
 import Breadcrumbs from '../../components/Breadcrumbs';
 import { useNavigate } from 'react-router-dom';
+import logo from "../../Images/favicon.ico"
 function PlanForm() {
   const [budget, setBudget] = useState(5); // Example for slider
   const [travelers, setTravelers] = useState(1); // Example for number of travelers
@@ -41,14 +42,13 @@ function PlanForm() {
       <div className='flex w-screen h-[10%] mb-1'>  
             <ThemedHeader>
                 <div className="flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    {/* <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                    </svg>
-                    <span className="font-bold text-lg text-gray-800">Trip Journey Trip</span>
-                </div>
-                <div className="font-bold text-lg text-gray-800">Trip Details</div>
-                <div className="flex items-center">
-                    <img src="https://via.placeholder.com/30" alt="User" className="rounded-full" />
+                    </svg> */}
+
+<img src={logo} className="flex h-full w-auto object-contain">
+                    </img>
+                    <span className="font-bold text-lg text-gray-800">DestiniAI</span>
                 </div>
             </ThemedHeader>
       </div>
@@ -60,10 +60,9 @@ function PlanForm() {
 
       {/* Main Content */}
       <div className="flex flex-col flex-grow p-8 overflow-auto mb-3">
-        <h1 className="text-lg font-bold mb-2">Let's define your journey</h1>
+        <h1 className="text-lg font-bold mb-2">Chart Your Course: Define Your Adventure</h1>
         <p className="text-gray-600 text-sm mb-4 w-[60%]">
-          Provide key full details so let us can few guide gustim plan—or answer guidens if
-          questions if ano chose Help Me Plan.
+          Provide essential details to shape your plan.
         </p>
 
         {/* Form Layout */}
@@ -150,10 +149,10 @@ function PlanForm() {
                 </button>
               </div>
 
-              <label className="block text-gray-700 text-sm font-bold mb-2">Anything special? Dietary needs, events, or preferences....</label>
+              <label className="block text-gray-700 text-sm font-bold mb-2">Any special requests? Dietary needs, events, or unique preferences?</label>
               <div className="flex items-center border border-gray-300 rounded-md p-2">
                 <textarea
-                  placeholder="Anything special? Dietary needs, events, or preferences...."
+                  placeholder="Any special requests? Dietary needs, events, or unique preferences?"
                   className="flex-grow outline-none resize-none h-24"
                 ></textarea>
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
