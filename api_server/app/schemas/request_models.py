@@ -1,5 +1,7 @@
 from pydantic import BaseModel
 
-class DummyItem(BaseModel):
-    name: str
-    value: str
+class TripRequest(BaseModel):
+    destination: str
+    start_date: str
+    end_date: str
+    budget: float
