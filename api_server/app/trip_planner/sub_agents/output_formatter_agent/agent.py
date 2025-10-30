@@ -8,6 +8,6 @@ output_formatter_agent = LlmAgent(
     model=MODEL,
     instruction=prompt.OUTPUT_FORMATTER_AGENT_PROMPT,
     description="Extracts structured trip details for agent pipeline.",
-    output_key="formatted_trip_inputs"
+    output_key="formatted_output"
 )
 
