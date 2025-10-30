@@ -14,6 +14,7 @@ End Date: {formatted_trip_inputs.end_date}
 Budget: {formatted_trip_inputs.budget}
 Trip plan: {trip_plan}
 Iternary: {iternary}
+Booking: {booking_details}
 
 Format Specification:
 {
