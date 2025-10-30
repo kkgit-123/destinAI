@@ -1,24 +1,24 @@
-from google.adk.agents import Agent
-from google.adk.tools.agent_tool import AgentTool
-
-from . import prompt
+from .sub_agents.trip_input_formatter_agent import trip_input_formatter_agent
 from .sub_agents.planner_agent import planner_agent
-from .sub_agents.inventory_agent import inventory_agent
+from .sub_agents.itinerary_agent import itinerary_agent
+from .sub_agents.output_formatter_agent import output_formatter_agent
+from dotenv import load_dotenv
+from google.adk.agents import SequentialAgent
 
-MODEL = "gemini-2.5-pro"  # Use your preferred model version
 
-root_agent = Agent(
-    name="trip_coordinator",
-    model=MODEL,
-    description=(
-        "Plans a user's entire trip by delegating creation of detailed itineraries "
-        "and packing lists. Coordinates with specialized planning and inventory agents."
-    ),
-    instruction=prompt.TRIP_COORDINATOR_PROMPT,
-    sub_agents=[planner_agent, inventory_agent],
-    tools=[
-        AgentTool(planner_agent),
-        AgentTool(inventory_agent),
+load_dotenv()
+
+MODEL = "gemini-2.5-pro" 
+
+trip_pipeline_agent = SequentialAgent(
+    name="TripPipelineAgent",
+    sub_agents=[
+        trip_input_formatter_agent,  
+        planner_agent,               
+        itinerary_agent,              
+        output_formatter_agent
     ],
-    output_key="trip_plan",
+    description="Parses user prompt, builds trip plan, and generates itinerary."
 )
+
+root_agent = trip_pipeline_agent

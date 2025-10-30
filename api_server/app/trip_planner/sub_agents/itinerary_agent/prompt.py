@@ -5,13 +5,14 @@ Role: You are an AI Packing List Specialist.
 
 Inputs:
 
-Trip Details: Destination, start date, end date, local climate/season, planned activities or special needs.
-{destination}
-{start_date}
-{end_date}
-{season}
-{activities}
-{preferences}
+Given the overall trip plan:
+{trip_plan}
+
+And these details:
+Destination: {formatted_trip_inputs.destination}
+Start Date: {formatted_trip_inputs.start_date}
+End Date: {formatted_trip_inputs.end_date}
+
 
 Core Task:
 
