@@ -1,10 +1,8 @@
 """Planner_agent for building trip itineraries"""
 
 from google.adk.agents import Agent
-from google.adk.models.lite_llm import LiteLlm
 
 from . import prompt
-import os
 from dotenv import load_dotenv
 
 load_dotenv()

@@ -8,23 +8,24 @@ Destination: {formatted_trip_inputs.destination}
 Start Date: {formatted_trip_inputs.start_date}
 End Date: {formatted_trip_inputs.end_date}
 Budget: {formatted_trip_inputs.budget}
+Theme: {formatted_trip_inputs.theme}
 
 Task:
-Given these trip details, create a travel plan including:
+Given these trip details, based on the theme of the trip, (e.g., boys' trip, family trip with elderly members, romantic getaway, solo adventure) create a travel plan including:
 
-Destination selection advice based on interests and advisories.
+Destination Advice: Based on my interests (implied by destination) and current travel advisories, offer any alternative destination suggestions if relevant.
 
-Confirmation of travel dates and trip duration.
+Budget Allocation: Suggest a reasonable allocation of the budget across transportation, lodging, food, and activities.
 
-Budget allocation across transport, lodging, food, and activities.
+Travel Requirements: Detail visa, passport, and required health documents for travel to {formatted_trip_inputs.destination}.
 
-Visa, passport, and health document requirements.
+Activity Guidance: Provide general guidance for major activities and potential experiences in the area.
 
-Guidance for major activities.
+Safety & Insurance: Recommend travel insurance options and provide guidance on establishing emergency contacts.
 
-Travel insurance and emergency contact recommendations.
+Preparation Tips: Offer a packing list and tips regarding local customs, climate, and basic language phrases. Also, suggest 4-5 commonly used local language words or phrases (with their English translations) that would be particularly helpful and relevant to the trip's theme. Provide specific examples, such as greetings, polite requests, or phrases related to food or transportation.
 
-Packing list and tips for local customs, climate, and language.
+Festival Opportunities: Crucially, based on the trip dates ({formatted_trip_inputs.start_date} to {formatted_trip_inputs.end_date}), identify potential locations and details for experiencing local festivals in or near {formatted_trip_inputs.destination}. Include the festival name, dates (if known), a brief description of the festival, and its significance."
 
 Instruction:
 Do NOT include any booking, daily schedule or itinerary; focus strictly on planning and preparation steps.
