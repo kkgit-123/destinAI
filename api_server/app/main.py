@@ -5,9 +5,11 @@ import os
 import logging
 
 # Import your agent and models
-from app.trip_planner.agent import root_agent
+from app.trip_planner.agent import trip_pipeline_agent
 from app.schemas.request_models import TripRequest
-from app.schemas.response_models import TripResponse
+from app.schemas.response_models import StandardResponse
+# from google.adk.runners import Runner  # Removed google.adk dependency
+# from google.adk.agents.invocation_context import InvocationContext  # Removed google.adk dependency
 
 # Import helper functions (if you have any)
 from app.helper.exception_handlers import http_exception_handler, unhandled_exception_handler
@@ -65,36 +67,17 @@ async def read_root():
     return {"message": "Welcome to the Trip Planner API!"}
 
 
-@app.post("/plan_trip", response_model=TripResponse, tags=["trip_planning"])
-async def plan_trip(trip_request: TripRequest):
-    """
-    Endpoint to plan a trip based on a user prompt.
-    """
-    logger.info(f"Received trip planning request: {trip_request.user_prompt}")
+# (Other code remains the same as above, only the run_trip_pipeline function changes)
+
+@app.post("/run_trip_pipeline")
+async def run_trip_pipeline(request: TripRequest):
+    logger.info(f"Received external request: {request.query}")
+
     try:
-        # Run the agent
-        trip_plan = root_agent.run(trip_request.user_prompt)
-
-        # Create the response
-        response = TripResponse(trip_plan=trip_plan)
-        logger.info(f"Trip planning successful. Returning response.")
-        return response
-
-    except Exception as e:
-        logger.exception("An error occurred during trip planning.")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=str(e),
-        )
-
-# Example endpoint with authentication (if you need it)
-# @app.get("/protected_resource", tags=["protected"])
-# async def protected_resource(user_id: str = Depends(get_current_user_id)):
-#     logger.info(f"Protected resource accessed by user: {user_id}")
-#     return {"message": f"This is a protected resource for user {user_id}"}
-
-
-# if __name__ == "__main__":
-#     import uvicorn
-
-#     uvicorn.run(app, host="0.0.0.0", port=8000)
+        # Run agentic workflow
+        result = await trip_pipeline_agent.run_async(request.query)  # Assuming 'run' is async
+        logger.info("TripPipelineAgent workflow executed successfully.")
+        return {"result": result}
+    except Exception as exc:
+        logger.error(f"Workflow execution error: {exc}")
+        return {"error": str(exc)}
