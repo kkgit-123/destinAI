@@ -11,3 +11,4 @@ booking_agent = Agent(
     tools=[google_search],
     output_key="booking_details"
 )
+
